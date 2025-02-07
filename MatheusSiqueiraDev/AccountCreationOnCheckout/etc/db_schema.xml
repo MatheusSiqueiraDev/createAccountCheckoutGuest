@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © MatheusSiqueiraDev, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/db_schema.xsd">
+    <table name="quote" resource="default" engine="innodb" comment="Quote Table">
+        <column name="encrypted_password" xsi:type="text" nullable="true" comment="Encrypted Password"/>
+        <column name="dob" xsi:type="date" nullable="true" comment="Date of Birth"/>
+    </table>
+</schema>
