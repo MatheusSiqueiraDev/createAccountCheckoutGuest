@@ -4,3 +4,4 @@
 "Encrypted password not found for the client.","Senha criptografada não encontrada para o cliente."
 "Unable to create customer account.","Não foi possível criar a conta do cliente."
 "The date cannot be greater than today's date.","A data não pode ser maior que a data de hoje."
+"Allow Customer Creation During Checkout","Permitir criação de conta durante a finalização da compra"

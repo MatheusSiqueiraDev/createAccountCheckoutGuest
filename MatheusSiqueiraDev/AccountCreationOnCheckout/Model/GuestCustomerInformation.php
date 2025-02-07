@@ -15,6 +15,7 @@ use Psr\Log\LoggerInterface;
 use Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Framework\Stdlib\DateTime\DateTimeFactory;
+use MatheusSiqueiraDev\AccountCreationOnCheckout\Model\Config\CheckoutConfig;
 
 /**
  * Classe responsável por salvar as informações do cliente convidado durante o checkout.
@@ -29,13 +30,15 @@ class GuestCustomerInformation implements GuestCustomerInformationInterface
      * @param LoggerInterface $logger Logger para registrar erros.
      * @param QuoteIdMaskFactory $quoteIdMaskFactory Fábrica para recuperar a relação entre maskedId e quoteId.
      * @param DateTimeFactory $dateTimeFactory 
+     * @param CheckoutConfig $checkoutConfig 
      */
     public function __construct(
         private readonly CartRepositoryInterface $quoteRepository,
         private readonly EncryptorInterface $encryptor,
         private readonly LoggerInterface $logger,
         private readonly QuoteIdMaskFactory $quoteIdMaskFactory,
-        private readonly DateTimeFactory $dateTimeFactory //
+        private readonly DateTimeFactory $dateTimeFactory, 
+        private readonly CheckoutConfig $checkoutConfig 
     ) {}
 
     /**
@@ -50,6 +53,10 @@ class GuestCustomerInformation implements GuestCustomerInformationInterface
     public function saveInformation(string $cartId, string $password, string $dob): bool
     {
         try {
+            if(!$this->checkoutConfig->isCustomerAccountCreateCheckout()) {
+                return true;
+            }
+
             $quote = $this->getQuoteByMaskedId($cartId);
 
             $this->updatePassword($quote, $password);

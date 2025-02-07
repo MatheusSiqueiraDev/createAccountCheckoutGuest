@@ -10,6 +10,7 @@ namespace MatheusSiqueiraDev\AccountCreationOnCheckout\Model\Checkout;
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Customer\Model\AccountManagement;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use MatheusSiqueiraDev\AccountCreationOnCheckout\Model\Config\CheckoutConfig;
 
 /**
  * Class ConfigProvider
@@ -19,9 +20,15 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  */
 class ConfigProvider implements ConfigProviderInterface
 {
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param AccountManagement $accountManagement
+     * @param CheckoutConfig $checkoutConfig 
+     */
     public function __construct(
-        private ScopeConfigInterface $_scopeConfig,
-        private AccountManagement $accountManagement
+        private ScopeConfigInterface $scopeConfig,
+        private AccountManagement $accountManagement,
+        private readonly CheckoutConfig $checkoutConfig 
     ) {}
 
     /**
@@ -31,9 +38,13 @@ class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig(): array
     {
+        if(!$this->checkoutConfig->isCustomerAccountCreateCheckout()) {
+            return [];
+        }
+
         return [
-            'minimumPasswordLength' => $this->_scopeConfig->getValue(AccountManagement::XML_PATH_MINIMUM_PASSWORD_LENGTH),
-            'requiredCharacterClassesNumber' => $this->_scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER),
+            'minimumPasswordLength' => $this->scopeConfig->getValue(AccountManagement::XML_PATH_MINIMUM_PASSWORD_LENGTH),
+            'requiredCharacterClassesNumber' => $this->scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER),
         ];
     }
 }

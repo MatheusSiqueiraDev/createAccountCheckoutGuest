@@ -6,76 +6,76 @@
 -->
 
 <!-- ko ifnot: isCustomerLoggedIn() -->
-    <form class="form form-create-account form-shipping-address" data-role="customer-creat-account" data-bind="fadeVisible: !isPasswordVisible(), mageInit: {'validation': {}}">
-        <fieldset id="customer-information-fieldset" class="fieldset">
-            <div class="field password required">
-                <label for="password" class="label"><span data-bind="i18n: 'Password'"></span></label>
-                <div class="control">
-                    <input type="password" name="password" id="password"
-                        data-bind="
-                            i18n: 'Password',
-                            attr: {
-                                title: $t('Password'), 
-                                'data-password-min-length': minimumPasswordLength,
-                                'data-password-min-character-sets': requiredCharacterClassesNumber
+<form class="form form-create-account form-shipping-address" data-role="customer-creat-account" data-bind="fadeVisible: !isPasswordVisible(), mageInit: {'validation': {}}">
+    <fieldset id="customer-information-fieldset" class="fieldset">
+        <div class="field password required">
+            <label for="password" class="label"><span data-bind="i18n: 'Password'"></span></label>
+            <div class="control">
+                <input type="password" name="password" id="password"
+                    data-bind="
+                        i18n: 'Password',
+                        attr: {
+                            title: $t('Password'), 
+                            'data-password-min-length': minimumPasswordLength,
+                            'data-password-min-character-sets': requiredCharacterClassesNumber
+                        },
+                        mageInit: {
+                            'passwordStrengthIndicator':{
+                                'formSelector': 'form.form-password'
                             },
-                            mageInit: {
-                                'passwordStrengthIndicator':{
-                                    'formSelector': 'form.form-password'
-                                },
-                                'keyup-validate': {}
-                            }
-                        "
-                        class="input-text"
-                        data-validate="{required:true, 'validate-customer-password':true}"
-                        aria-required="true"
-                        autocomplete="off">
-                    <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
-                        <div id="password-strength-meter" class="password-strength-meter">
-                            <!-- ko i18n: 'Password Strength' --><!-- /ko -->
-                            <span id="password-strength-meter-label" data-role="password-strength-meter-label">
-                                <!-- ko i18n: 'No Password' --><!-- /ko -->
-                            </span>
-                        </div>
+                            'keyup-validate': {}
+                        }
+                    "
+                    class="input-text"
+                    data-validate="{required:true, 'validate-customer-password':true}"
+                    aria-required="true"
+                    autocomplete="off">
+                <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
+                    <div id="password-strength-meter" class="password-strength-meter">
+                        <!-- ko i18n: 'Password Strength' --><!-- /ko -->
+                        <span id="password-strength-meter-label" data-role="password-strength-meter-label">
+                            <!-- ko i18n: 'No Password' --><!-- /ko -->
+                        </span>
                     </div>
                 </div>
+            </div>
 
+        </div>
+        <div class="field confirmation required">
+            <label for="password-confirmation" class="label"><span data-bind="i18n: 'Confirm Password'"></span></label>
+            <div class="control">
+                <input 
+                    type="password" 
+                    name="password_confirmation"
+                    data-bind="attr: {title: $t('Confirm Password')},  
+                        mageInit: {
+                            'keyup-validate': {}},
+                        value: passwordValue" 
+                    id="password-confirmation" 
+                    aria-required="true"
+                    class="input-text " data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
             </div>
-            <div class="field confirmation required">
-                <label for="password-confirmation" class="label"><span data-bind="i18n: 'Confirm Password'"></span></label>
-                <div class="control">
-                    <input 
-                        type="password" 
-                        name="password_confirmation"
-                        data-bind="attr: {title: $t('Confirm Password')},  
-                            mageInit: {
-                                'keyup-validate': {}},
-                            value: passwordValue" 
-                        id="password-confirmation" 
-                        aria-required="true"
-                        class="input-text " data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
-                </div>
+        </div>
+        <div class="field choice">
+            <!-- ko with: getChild('showPassword') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <!-- Campo de Data de Nascimento -->
+        <div class="field dob required">
+            <label for="dob" class="label"><span data-bind="i18n: 'Date of Birth'"></span></label>
+            <div class="control">
+                <input 
+                    type="text"
+                    name="dob"
+                    id="dob"
+                    class="input-text"
+                    data-bind="attr: { title: $t('Date of Birth') }, afterRender: initFieldCalendare"
+                    data-validate="{required:true, 'validate-date': {'dateFormat': 'dd/MM/yy' }, 'validate-no-future-date': true}"
+                    aria-required="true"
+                    autocomplete="bday">
             </div>
-            <div class="field choice">
-                <!-- ko with: getChild('showPassword') -->
-                    <!-- ko template: getTemplate() --><!-- /ko -->
-                <!--/ko-->
-            </div>
-            <!-- Campo de Data de Nascimento -->
-            <div class="field dob required">
-                <label for="dob" class="label"><span data-bind="i18n: 'Date of Birth'"></span></label>
-                <div class="control">
-                    <input 
-                        type="text"
-                        name="dob"
-                        id="dob"
-                        class="input-text"
-                        data-bind="attr: { title: $t('Date of Birth') }, afterRender: initFieldCalendare"
-                        data-validate="{required:true, 'validate-date': {'dateFormat': 'dd/MM/yy' }, 'validate-no-future-date': true}"
-                        aria-required="true"
-                        autocomplete="bday">
-                </div>
-            </div>
-        </fieldset>
-    </form>
+        </div>
+    </fieldset>
+</form>
 <!-- /ko -->

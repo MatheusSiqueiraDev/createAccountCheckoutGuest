@@ -13,4 +13,8 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="reder_checkout_disable_create_customer" type="MatheusSiqueiraDev\AccountCreationOnCheckout\Plugin\Checkout\LayoutProcessorPlugin" />
+    </type>
 </config>

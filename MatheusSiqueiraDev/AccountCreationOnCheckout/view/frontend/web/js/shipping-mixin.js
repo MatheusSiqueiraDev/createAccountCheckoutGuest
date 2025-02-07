@@ -28,7 +28,13 @@ define([
                     return false
                 }
                 
-                if (!customer.isLoggedIn() && !this.isPasswordVisible) {
+                if ((!customer.isLoggedIn() && 
+                    !this.isPasswordVisible ) &&  
+                    ($(`${this.customerFormSelector} input[name=password]`).val() || 
+                    $(`${this.customerFormSelector} input[name=password_confirmation]`).val() ||
+                    $(`${this.customerFormSelector} input[name=dob]`).val()
+                )
+                ) {
                     if(!($(this.customerFormSelector).validation() && 
                         $(`${this.customerFormSelector} input[name=password]`).valid() &&
                         $(`${this.customerFormSelector} input[name=password_confirmation]`).valid() &&
@@ -49,7 +55,11 @@ define([
             setShippingInformation() {
                 this._super();
 
-                if(this.validateShippingInformation() && !customer.isLoggedIn() && !this.isPasswordVisible) {
+                if(this.validateShippingInformation() && 
+                    !customer.isLoggedIn() && 
+                    !this.isPasswordVisible &&
+                    $(`${this.customerFormSelector} input[name=password]`).val()
+                ) {
                     events.trigger('validateShippingInformation');
                 }
             }

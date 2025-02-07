@@ -25,9 +25,26 @@ use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Quote\Model\QuoteFactory;
 use Magento\Customer\Model\CustomerFactory;
+use MatheusSiqueiraDev\AccountCreationOnCheckout\Model\Config\CheckoutConfig;
 
 class CreateCustomer implements ObserverInterface
 {
+    /**
+     * @param CustomerInterfaceFactory $customerFactory
+     * @param AccountManagementInterface $accountManagement
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param AddressRepositoryInterface $addressRepository
+     * @param AddressInterfaceFactory $addressFactory
+     * @param RegionInterfaceFactory $regionFactory
+     * @param OrderRepositoryInterface $orderRepository
+     * @param EncryptorInterface $encryptor
+     * @param StoreManagerInterface $storeManager
+     * @param LoggerInterface $logger
+     * @param Session $checkoutSession
+     * @param QuoteFactory $quoteFactory
+     * @param CustomerFactory $customerFactoryModel
+     * @param CheckoutConfig $checkoutConfig 
+     */
     public function __construct(
         private readonly CustomerInterfaceFactory $customerFactory,
         private readonly AccountManagementInterface $accountManagement,
@@ -41,7 +58,8 @@ class CreateCustomer implements ObserverInterface
         private readonly LoggerInterface $logger,
         private readonly Session $checkoutSession,
         private readonly QuoteFactory $quoteFactory,
-        private readonly CustomerFactory $customerFactoryModel
+        private readonly CustomerFactory $customerFactoryModel,
+        private readonly CheckoutConfig $checkoutConfig 
     ) {}
 
     /**
@@ -49,6 +67,10 @@ class CreateCustomer implements ObserverInterface
      */
     public function execute(Observer $observer): void
     {
+        if(!$this->checkoutConfig->isCustomerAccountCreateCheckout()) {
+            return;
+        }
+
         /** @var \Magento\Sales\Model\Order $order */
         $order = $this->checkoutSession->getLastRealOrder();
         if ($order && $this->shouldCreateCustomer($order)) {
@@ -64,7 +86,6 @@ class CreateCustomer implements ObserverInterface
             }
 
             if (!$encryptedPassword) {
-                $this->logger->error(__('Encrypted password not found for the client.'), ['email' => $email]);
                 return;
             }
 
