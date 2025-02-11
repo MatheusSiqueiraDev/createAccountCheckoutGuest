@@ -190,12 +190,12 @@ class CreateCustomer implements ObserverInterface
      *
      * @param OrderAddress|null $orderAddress
      * @param CustomerInterface $customer
-     * @return string|null
+     * @return void
      */
-    private function saveAddress(?OrderAddress $orderAddress, CustomerInterface $customer): ?string
+    private function saveAddress(?OrderAddress $orderAddress, CustomerInterface $customer): void
     {
         if (!$orderAddress) {
-            return null;
+            return;
         }
 
         $address = $this->addressFactory->create();
@@ -227,8 +227,7 @@ class CreateCustomer implements ObserverInterface
             $address->setRegion($region);
         }
 
-        $savedAddress = $this->addressRepository->save($address);
-        return $savedAddress->getId();
+        $this->addressRepository->save($address);
     }
 
     /**

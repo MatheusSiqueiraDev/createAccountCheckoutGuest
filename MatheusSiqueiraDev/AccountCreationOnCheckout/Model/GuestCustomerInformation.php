@@ -54,7 +54,7 @@ class GuestCustomerInformation implements GuestCustomerInformationInterface
     {
         try {
             if(!$this->checkoutConfig->isCustomerAccountCreateCheckout()) {
-                return true;
+                return false;
             }
 
             $quote = $this->getQuoteByMaskedId($cartId);
@@ -65,10 +65,13 @@ class GuestCustomerInformation implements GuestCustomerInformationInterface
             $this->updateDob($quote, $formattedDob);
 
             $this->quoteRepository->save($quote);
+            
             return true;
         } catch (\Exception $e) {
             $this->logger->error('Error saving guest informations: ' . $e->getMessage());
             throw new LocalizedException(__('An error occurred while saving the information.'));
+
+            return false;
         }
     }
 
