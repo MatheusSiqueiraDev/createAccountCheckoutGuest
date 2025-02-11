@@ -12,7 +12,7 @@ use Magento\Store\Model\ScopeInterface;
 
 class CheckoutConfig
 {
-    private const XML_PATH_CUSTOMER_ACCOUNT_CREATE_CHECKOUT = 'checkout_reder/options_reder/allow_customer_creation_checkout';
+    private const XML_PATH_CUSTOMER_ACCOUNT_CREATE_CHECKOUT = 'checkout_matheussiqueiradev/options_matheussiqueiradev/allow_customer_creation_checkout';
 
     /**
      * @param ScopeConfigInterface $scopeConfig

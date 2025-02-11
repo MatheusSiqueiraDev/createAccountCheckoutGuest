@@ -16,6 +16,9 @@ var config = {
             },
             'mage/validation': {
                 'MatheusSiqueiraDev_AccountCreationOnCheckout/js/validation/no-future-date': true
+            },
+            'Magento_Checkout/js/view/form/element/email': {
+                'MatheusSiqueiraDev_AccountCreationOnCheckout/js/view/form/element/email-mixin': true
             }
         }
     }

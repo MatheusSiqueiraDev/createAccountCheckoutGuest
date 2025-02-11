@@ -42,6 +42,8 @@ define([
         minimumPasswordLength: window.checkoutConfig.minimumPasswordLength || 0,
         requiredCharacterClassesNumber: window.checkoutConfig.requiredCharacterClassesNumber || 0,
         passwordValue: ko.observable(),
+        passwordWrite: ko.observable(),
+        passwordconfirmationId: ko.observable('passwordconfirmationId'),
         calendarId: '',
 
         /**
@@ -114,6 +116,6 @@ define([
                 showButtonPanel: false,
                 showWeek: false
             }).mask('00/00/0000');
-        }
+        },
     });
 });

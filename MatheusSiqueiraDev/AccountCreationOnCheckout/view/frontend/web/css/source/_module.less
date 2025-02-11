@@ -1,11 +1,21 @@
 & when (@media-common =true) {
-    #shipping .form.form-create-account {
-        .field.dob {
-            .ui-datepicker-trigger {
-                position: absolute;
-                right: 1rem;
-                transform: translateY(-50%);
-                top: 1.5rem;
+    #shipping {
+        .form.form-login {
+            margin-bottom: 0;
+        }
+
+        .form.form-create-account {
+            margin-top: 0;
+            border-bottom: 1px solid #e7e7e7;
+            padding-bottom: 1em;
+            
+            .field.dob {
+                .ui-datepicker-trigger {
+                    position: absolute;
+                    right: 1rem;
+                    transform: translateY(-50%);
+                    top: 1.5rem;
+                }
             }
         }
     }

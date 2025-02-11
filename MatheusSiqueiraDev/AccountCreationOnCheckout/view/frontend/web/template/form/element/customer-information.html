@@ -8,7 +8,11 @@
 <!-- ko ifnot: isCustomerLoggedIn() -->
 <form class="form form-create-account form-shipping-address" data-role="customer-creat-account" data-bind="fadeVisible: !isPasswordVisible(), mageInit: {'validation': {}}">
     <fieldset id="customer-information-fieldset" class="fieldset">
-        <div class="field password required">
+        <div class="field password" data-bind="mageInit: {
+            'passwordStrengthIndicator':{
+                'formSelector': 'form.form-create-account',
+            }
+        }">
             <label for="password" class="label"><span data-bind="i18n: 'Password'"></span></label>
             <div class="control">
                 <input type="password" name="password" id="password"
@@ -19,15 +23,10 @@
                             'data-password-min-length': minimumPasswordLength,
                             'data-password-min-character-sets': requiredCharacterClassesNumber
                         },
-                        mageInit: {
-                            'passwordStrengthIndicator':{
-                                'formSelector': 'form.form-password'
-                            },
-                            'keyup-validate': {}
-                        }
+                        value: passwordWrite
                     "
                     class="input-text"
-                    data-validate="{required:true, 'validate-customer-password':true}"
+                    data-validate="{'validate-customer-password':true}"
                     aria-required="true"
                     autocomplete="off">
                 <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
@@ -39,9 +38,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="field confirmation required">
+        <div class="field confirmation required" data-bind="fadeVisible: !!passwordWrite()">
             <label for="password-confirmation" class="label"><span data-bind="i18n: 'Confirm Password'"></span></label>
             <div class="control">
                 <input 
@@ -50,19 +48,19 @@
                     data-bind="attr: {title: $t('Confirm Password')},  
                         mageInit: {
                             'keyup-validate': {}},
-                        value: passwordValue" 
-                    id="password-confirmation" 
+                        value: passwordValue,
+                        id: passwordconfirmationId" 
                     aria-required="true"
                     class="input-text " data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
             </div>
         </div>
-        <div class="field choice">
+        <div class="field choice" data-bind="fadeVisible: !!passwordWrite()">
             <!-- ko with: getChild('showPassword') -->
                 <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
         <!-- Campo de Data de Nascimento -->
-        <div class="field dob required">
+        <div class="field dob required" data-bind="fadeVisible: !!passwordWrite()">
             <label for="dob" class="label"><span data-bind="i18n: 'Date of Birth'"></span></label>
             <div class="control">
                 <input 

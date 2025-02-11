@@ -7,10 +7,10 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <checkout_reder>
-            <options_reder>
+        <checkout_matheussiqueiradev>
+            <options_matheussiqueiradev>
                 <allow_customer_creation_checkout>1</allow_customer_creation_checkout>
-            </options_reder>
-        </checkout_reder>
+            </options_matheussiqueiradev>
+        </checkout_matheussiqueiradev>
     </default>
 </config>
