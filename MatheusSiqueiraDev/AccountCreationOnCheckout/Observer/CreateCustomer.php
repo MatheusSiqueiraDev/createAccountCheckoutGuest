@@ -71,8 +71,11 @@ class CreateCustomer implements ObserverInterface
             return;
         }
 
-        /** @var \Magento\Sales\Model\Order $order */
-        $order = $this->checkoutSession->getLastRealOrder();
+        $orderId = $observer->getEvent()->getOrder()->getId();
+
+        /** @var \Magento\Sales\Api\Data\OrderInterface $order */
+        $order = $this->orderRepository->get($orderId);
+
         if ($order && $this->shouldCreateCustomer($order)) {
             $quote = $this->quoteFactory->create()->load($order->getQuoteId());
             $email = $quote->getCustomerEmail();
