@@ -9,4 +9,8 @@
     <event name="checkout_onepage_controller_success_action">
         <observer name="create_customer" instance="MatheusSiqueiraDev\AccountCreationOnCheckout\Observer\CreateCustomer"/>
     </event>
+
+    <event name="customer_login">
+        <observer name="associate_orders_to_customer" instance="MatheusSiqueiraDev\AccountCreationOnCheckout\Observer\AccountPageLoadObserver" />
+    </event>
 </config>

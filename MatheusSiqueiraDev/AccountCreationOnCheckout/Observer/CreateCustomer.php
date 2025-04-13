@@ -84,7 +84,6 @@ class CreateCustomer implements ObserverInterface
 
             $customer = $this->getCustomerByEmail($email);
             if ($customer) {
-                $this->assignOrderToCustomer($customer, $order);
                 return;
             }
 
@@ -104,7 +103,7 @@ class CreateCustomer implements ObserverInterface
                     storeId: $quote->getStoreId()
                 );
 
-                $this->assignOrderToCustomer($customer, $order);
+                $this->saveAddressCustomer($customer, $order);
             } catch (\Exception $e) {
                 $this->logError('Error creating customer account', $e, $email, $quote->getId());
             }
@@ -170,14 +169,10 @@ class CreateCustomer implements ObserverInterface
      * @param \Magento\Sales\Model\Order $order
      * @return void
      */
-    private function assignOrderToCustomer(CustomerInterface $customer, $order): void
+    private function saveAddressCustomer(CustomerInterface $customer, $order): void
     {
         try {
             if ($order->getId()) {
-                $order->setCustomerId($customer->getId())
-                    ->setCustomerIsGuest(false);
-                $this->orderRepository->save($order);
-
                 // Salva o endereço de entrega
                 $this->saveAddress($order->getShippingAddress(), $customer);
             }
